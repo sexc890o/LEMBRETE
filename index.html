@@ -1,1 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lembre-se</title>
+    <style>
+        /* Estilização Geral */
+        body {
+            background-color: white;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
 
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        /* Botão Formato Pílula */
+        .btn-pilula {
+            background-color: white;
+            border: 2px solid #ccc;
+            padding: 10px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .btn-pilula:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Área da Senha (escondida inicialmente) */
+        #area-senha {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .inputs-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-digito {
+            width: 40px;
+            height: 50px;
+            text-align: center;
+            font-size: 24px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .input-digito:focus {
+            border-color: #58cc02;
+        }
+
+        /* Conteúdo Final (Liberado pela senha) */
+        #conteudo-final {
+            display: none;
+            text-align: center;
+            font-size: 20px;
+            color: #222;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Parte 1: Título e Botão -->
+    <div id="parte-inicial" style="text-align: center;">
+        <h1>Lembre-se</h1>
+        <button class="btn-pilula" onclick="mostrarSenha()">
+            <span>Acessar</span>
+            <span>➔</span>
+        </button>
+    </div>
+
+    <!-- Parte 2: Campos da Senha -->
+    <div id="area-senha">
+        <p>Digite a senha:</p>
+        <div class="inputs-container">
+            <input type="text" maxlength="1" class="input-digito" oninput="pular(this, 0)">
+            <input type="text" maxlength="1" class="input-digito" oninput="pular(this, 1)">
+            <input type="text" maxlength="1" class="input-digito" oninput="pular(this, 2)">
+            <input type="text" maxlength="1" class="input-digito" oninput="pular(this, 3)">
+        </div>
+        <p id="erro" style="color: red; display: none;">Senha incorreta!</p>
+    </div>
+
+    <!-- Parte 3: O que aparece depois da senha -->
+    <div id="conteudo-final">
+        <!-- COLOQUE SEU TEXTO AQUI DEPOIS -->
+        <p>Acesso Liberado!</p>
+        <p> Hoje é 02 de março de 2026,
+            e eu to querendo fazer um lembrete, esses dias eu to caindo muito na lúxuria e isso não bom, me sinto muito mal dps e a única parte boa é quando acontece 
+            e ai vc gosta mas depois é totalmente ruim, mas é assim que funciona um vício, quero me lembrar de parar, pq sempre que n dá a minha vontade eu sempre fico mt feliz mas ai o corpo lembra
+            da sensação boa e na prática acaba ficando bom tbm mas dps é inevitavel a sensação de falhar com Deus, com vc, e a marca que deixa é vc olhar para qualquer pessoa e pensar o pior e isso é
+            horrivel muito ruim, e quando vc percebe q n tá pensando em besteira ai vc se sente ligeiramente feliz, pq né, além de cada coisa que o vicio já te fez fazer é horrivel, além de estar sempre
+            na sua cabeça, ent o meu pedido de mim mesmo para eu mesmo é viver normal, sem esse vício ruim, orar mais, todos os dia para Deus, para espanatar o Mal, pq isso me faz bem muito bem, e aproveite
+            com a sua familia,amigos e todos que te fazem feliz, estude mas tbm se permita a fazer algo diferente, algo que vc goste mesmo que n seja só estudar, ou algo diferente do de sempre; ent é isso,
+            viva seus dias sem esse vício mas sim feliz e se curando disso e lembre-se sempre que der algo ore para Jesus ele sim vai te ajudar. 
+          .</p>
+    </div>
+
+    <script>
+        const senhaCorreta = "3102";
+        const inputs = document.querySelectorAll('.input-digito');
+
+        function mostrarSenha() {
+            document.getElementById('parte-inicial').style.display = 'none';
+            document.getElementById('area-senha').style.display = 'flex';
+            inputs[0].focus(); // Coloca o cursor no primeiro campo
+        }
+
+        function pular(elemento, index) {
+            // Se digitou algo, pula para o próximo campo
+            if (elemento.value.length === 1 && index < 3) {
+                inputs[index + 1].focus();
+            }
+
+            // Verifica a senha quando preencher os 4 campos
+            let senhaDigitada = "";
+            inputs.forEach(input => senhaDigitada += input.value);
+
+            if (senhaDigitada.length === 4) {
+                if (senhaDigitada === senhaCorreta) {
+                    document.getElementById('area-senha').style.display = 'none';
+                    document.getElementById('conteudo-final').style.display = 'block';
+                } else {
+                    document.getElementById('erro').style.display = 'block';
+                    // Limpa os campos para tentar de novo
+                    setTimeout(() => {
+                        inputs.forEach(input => input.value = "");
+                        inputs[0].focus();
+                        document.getElementById('erro').style.display = 'none';
+                    }, 1000);
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
